@@ -1,24 +1,23 @@
+// 1. MUST BE AT THE VERY TOP
+require('dotenv').config();
+
 const dns = require('dns');
 dns.setDefaultResultOrder('ipv4first');
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-// Middleware setup
+// Middleware
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// 2. Connect using process.env.MONGO_URI
+mongoose.connect(process.env.MONGO_URI);
 
 // Schemas & Models
 const userSchema = new mongoose.Schema({
